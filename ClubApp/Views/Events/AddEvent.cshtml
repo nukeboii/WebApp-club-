@@ -1,0 +1,202 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model ClubApp.Models.UpcomingEvents
+@{
+    Layout = null;
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE HTML>
+<!--
+    Helios by HTML5 UP
+    html5up.net |
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Martial Arts Club</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="~/assets/css/noscript.css" /></noscript>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="left-sidebar is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <div id="header" style="background-image:url('../../images/slider.jpg')">
+
+            <!-- Inner -->
+            <div class="inner">
+                <header>
+                    <h1><a asp-controller="News" asp-action="Index" id="logo">Add Event</a></h1>
+                </header>
+            </div>
+
+            <!-- Nav -->
+            <nav id="nav">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li>
+                        <a>Member News</a>
+                        <ul>
+                            <li><a asp-controller="News" asp-action="Index">See Member News</a></li>
+                            @{
+                                string name = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(name))
+                                {
+                                    <li><a asp-controller="News" asp-action="AddNews">Add News</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a>Upcoming Competitions</a>
+                        <ul>
+                            <li><a asp-controller="Events" asp-action="Index">See Upcoming Competitions</a></li>
+                            @{
+                                string sessionName = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(sessionName))
+                                {
+                                    <li><a asp-controller="Events" asp-action="AddEvent">Add Upcoming Competition</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @{
+                        string user = Context.Session.GetString("user");
+                        if (string.IsNullOrEmpty(user))
+                        {
+                            <li><a asp-controller="User" asp-action="RegisterOrLogin">Register Or Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="User" asp-action="Logout">Logout</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- Main -->
+        <div class="wrapper style1">
+
+            <div class="container">
+                <div class="row gtr-200">
+                    <div class="col-12 col-12-mobile" id="sidebar">
+                        <hr class="first" />
+
+                        <hr />
+                        <section>
+                            <header>
+                                <h3><a href="#">Add Upcoming Event</a></h3>
+                            </header>
+                            <p>
+                                Please fill the details to add Upcoming Event
+                            </p>
+
+                            <div class="row gtr-50">
+                                <div class="col-2"></div>
+
+                                <form class="col-8" asp-action="AddEvent" enctype="multipart/form-data">
+                                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form6Example1" asp-for="CompetitionName">Competition Name</label>
+                                                <input required type="text" id="form6Example1" asp-for="CompetitionName" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="col">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form6Example2" asp-for="CompetitionLocation">Competition Location</label>
+                                                <input required type="text" id="form6Example2" asp-for="CompetitionLocation" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Text input -->
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form6Example3" asp-for="CompetitionDate">Competition Date</label>
+                                        <input type="date" required id="form6Example3" class="form-control" asp-for="CompetitionDate" />
+                                    </div>
+                                    <br />
+                                    <div class="form-outline mb-4">
+                                        <!-- Submit button -->
+                                        <button type="submit" class="col-12">Add Upcoming Event</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div id="footer">
+            <div class="container">
+                <hr />
+                <div class="row">
+                    <div class="col-12">
+
+                        <!-- Contact -->
+                        <section class="contact">
+                            <header>
+                                <h3>Do you want to build a good self-defence?</h3>
+                            </header>
+                            <p>Join Our club and be a part of professional Martial Arts environment. We have world class trainers to train with passion.</p>
+                            <ul class="icons">
+                                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                <li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+                                <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+                                <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+                            </ul>
+                        </section>
+
+                        <!-- Copyright -->
+                        <div class="copyright">
+                            <ul class="menu">
+                                <li>&copy; Nuketown. All rights reserved.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/jquery.dropotron.min.js"></script>
+    <script src="~/assets/js/jquery.scrolly.min.js"></script>
+    <script src="~/assets/js/jquery.scrollex.min.js"></script>
+    <script src="~/assets/js/browser.min.js"></script>
+    <script src="~/assets/js/breakpoints.min.js"></script>
+    <script src="~/assets/js/util.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    @section scripts{
+        <script type="text/javascript">
+            // Add the following code if you want the name of the file appear on select
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+        </script>
+    }
+</body>
+</html>

@@ -1,0 +1,275 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model ClubApp.Models.Member
+@{
+    Layout = null;
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE HTML>
+<!--
+    Helios by HTML5 UP
+    html5up.net |
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Martial Arts Club</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="~/assets/css/noscript.css" /></noscript>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="left-sidebar is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <div id="header" style="background-image:url('../../images/3.jpg')">
+
+            <!-- Inner -->
+            <div class="inner">
+                <header>
+                    <h1><a asp-controller="News" asp-action="Index" id="logo">Login Or Register</a></h1>
+                </header>
+            </div>
+
+            <!-- Nav -->
+            <nav id="nav">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li>
+                        <a>Member News</a>
+                        <ul>
+                            <li><a asp-controller="News" asp-action="Index">See Member News</a></li>
+                            @{
+                                string name = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(name))
+                                {
+                                    <li><a asp-controller="News" asp-action="AddNews">Add News</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a>Upcoming Competitions</a>
+                        <ul>
+                            <li><a asp-controller="Events" asp-action="Index">See Upcoming Competitions</a></li>
+                            @{
+                                string sessionName = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(sessionName))
+                                {
+                                    <li><a asp-controller="Events" asp-action="AddEvent">Add Upcoming Competition</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @{
+                        string user = Context.Session.GetString("user");
+                        if (string.IsNullOrEmpty(user))
+                        {
+                            <li><a asp-controller="User" asp-action="RegisterOrLogin">Register Or Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="User" asp-action="Logout">Logout</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- Main -->
+        <div class="wrapper style1">
+
+            <div class="container">
+                <div class="row gtr-200">
+                    <div class="col-12 col-12-mobile" id="sidebar">
+                        <hr class="first" />
+
+                        <hr />
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <!-- Pills navs -->
+                                <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link"
+                                           id="tab-login"
+                                           data-mdb-toggle="pill"
+                                           href="#pills-login"
+                                           role="tab"
+                                           aria-controls="pills-login"
+                                           aria-selected="true">Login</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active"
+                                           id="tab-register"
+                                           data-mdb-toggle="pill"
+                                           href="#pills-register"
+                                           role="tab"
+                                           aria-controls="pills-register"
+                                           aria-selected="false">Register</a>
+                                    </li>
+                                </ul>
+                                <!-- Pills navs -->
+                                <!-- Pills content -->
+                                <div class="tab-content">
+                                    <div class="tab-pane fade "
+                                         id="pills-login"
+                                         role="tabpanel"
+                                         aria-labelledby="tab-login">
+                                        <form asp-action="Login">
+
+                                            @{
+                                                if (ViewBag.Message != null && ViewBag.Message != "")
+                                                {
+                                                    <div class="alert alert-danger" role="alert">
+                                                        @ViewBag.Message
+                                                    </div>
+                                                }
+
+                                            }
+                                            <!-- Email input -->
+                                            <div class="form-outline mb-4">
+                                                <label asp-for="UserName" class="form-label" for="loginName">Username</label>
+                                                <input asp-for="UserName" required type="text" id="loginName" class="form-control" />
+                                            </div>
+
+                                            <!-- Password input -->
+                                            <div class="form-outline mb-4">
+                                                <label asp-for="Password" class="form-label" for="loginPassword">Password</label>
+                                                <input asp-for="Password" type="password" required id="loginPassword" class="form-control" />
+                                            </div>
+
+                                            <!-- Submit button -->
+                                            <button type="submit" class="col-12">Sign in</button>
+
+                                            <!-- Register buttons -->
+                                            <div class="text-center">
+                                                <p>Not a member? <a href="#" id="register">Register</a></p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade show active"
+                                         id="pills-register"
+                                         role="tabpanel"
+                                         aria-labelledby="tab-register">
+                                        <form asp-action="Register">
+
+                                            <!-- Name input -->
+                                            <div class="form-outline mb-4">
+                                                <label asp-for="FullName" class="form-label" for="registerName">Full Name</label>
+                                                <input asp-for="FullName" required type="text" id="registerName" class="form-control" />
+                                            </div>
+
+                                            <!-- Username input -->
+                                            <div class="form-outline mb-4">
+                                                <label asp-for="UserName" class="form-label" for="registerUsername">Username</label>
+                                                <input asp-for="UserName" required type="text" id="registerUsername" class="form-control" />
+                                            </div>
+
+                                            <!-- Email input -->
+                                            <div class="form-outline mb-4">
+                                                <label asp-for="Email" class="form-label" for="registerEmail">Email</label>
+                                                <input asp-for="Email" required type="email" id="registerEmail" class="form-control" />
+                                            </div>
+
+                                            <!-- Password input -->
+                                            <div class="form-outline mb-4">
+                                                <label asp-for="Password" class="form-label" for="registerPassword">Password</label>
+                                                <input asp-for="Password" required type="password" id="registerPassword" class="form-control" />
+                                            </div>
+
+                                            <div class="form-outline mb-4">
+                                                <!-- Submit button -->
+                                                <button type="submit" class="col-12">Sign Up</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Pills content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div id="footer">
+            <div class="container">
+                <hr />
+                <div class="row">
+                    <div class="col-12">
+
+                        <!-- Contact -->
+                        <section class="contact">
+                            <header>
+                                <h3>Do you want to build a good self-defence?</h3>
+                            </header>
+                            <p>Join Our club and be a part of professional Martial Arts environment. We have world class trainers to train with passion.</p>
+                            <ul class="icons">
+                                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                <li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+                                <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+                                <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+                            </ul>
+                        </section>
+
+                        <!-- Copyright -->
+                        <div class="copyright">
+                            <ul class="menu">
+                                <li>&copy; Nuketown. All rights reserved.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/jquery.dropotron.min.js"></script>
+    <script src="~/assets/js/jquery.scrolly.min.js"></script>
+    <script src="~/assets/js/jquery.scrollex.min.js"></script>
+    <script src="~/assets/js/browser.min.js"></script>
+    <script src="~/assets/js/breakpoints.min.js"></script>
+    <script src="~/assets/js/util.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $('#tab-login').click(function () {
+            $('#tab-login').addClass("active");
+            $('#pills-login').addClass("show");
+            $('#pills-login').addClass("active");
+
+            $('#tab-register').removeClass("active");
+            $('#pills-register').removeClass("active");
+            $('#pills-register').removeClass("show");
+        });
+
+        $('#tab-register,#register').click(function () {
+            $('#tab-register').addClass("active");
+            $('#pills-register').addClass("show");
+            $('#pills-register').addClass("active");
+
+            $('#tab-login').removeClass("active");
+            $('#pills-login').removeClass("active");
+            $('#pills-login').removeClass("show");
+        });
+    </script>
+</body>
+</html>

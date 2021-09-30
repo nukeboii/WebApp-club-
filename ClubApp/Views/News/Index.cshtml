@@ -1,0 +1,181 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model List<ClubApp.Models.News>
+@{
+    Layout = null;
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE HTML>
+<!--
+    Helios by HTML5 UP
+    html5up.net |
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Martial Arts Club</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="~/assets/css/noscript.css" /></noscript>
+</head>
+<body class="left-sidebar is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <div id="header" style="background-image:url('../../images/slider4.jpg')">
+
+            <!-- Inner -->
+            <div class="inner">
+                <header>
+                    <h1><a asp-controller="News" asp-action="Index" id="logo">See Top News</a></h1>
+                </header>
+            </div>
+
+            <!-- Nav -->
+            <nav id="nav">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li>
+                        <a>Member News</a>
+                        <ul>
+                            <li><a asp-controller="News" asp-action="Index">See Member News</a></li>
+                            @{
+                                string name = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(name))
+                                {
+                                    <li><a asp-controller="News" asp-action="AddNews">Add News</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a>Upcoming Competitions</a>
+                        <ul>
+                            <li><a asp-controller="Events" asp-action="Index">See Upcoming Competitions</a></li>
+                            @{
+                                string sessionName = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(sessionName))
+                                {
+                                    <li><a asp-controller="Events" asp-action="AddEvent">Add Upcoming Competition</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @{
+                        string user = Context.Session.GetString("user");
+                        if (string.IsNullOrEmpty(user))
+                        {
+                            <li><a asp-controller="User" asp-action="RegisterOrLogin">Register Or Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="User" asp-action="Logout">Logout</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- Main -->
+        <div class="wrapper style1">
+
+            <div class="container">
+                <div class="row gtr-200">
+                    <div class="col-12 col-12-mobile" id="sidebar">
+                        <hr class="first" />
+
+                        <hr />
+                        <section>
+                            <header>
+                                <h3><a href="#">Top News of the Week</a></h3>
+                            </header>
+                            <div class="row gtr-50">
+                                @{
+                                    if (Model.Count > 0)
+                                    {
+                                        foreach (var news in Model)
+                                        {
+                                            <div class="col-4">
+                                                <a href="#" class="image fit"><img src="~/resources/@news.ImageName" alt="" /></a>
+                                            </div>
+                                            <div class="col-8">
+                                                <h4>@news.NewsTitle</h4>
+                                                <p>
+                                                    @news.Description
+                                                </p>
+                                                <p>
+                                                    Created At : <b>@news.CreatedDate.ToShortDateString()</b>
+                                                </p>
+                                                <p>
+                                                    Posted By : <b>@news.Member.FullName</b>
+                                                </p>
+                                               
+                                            </div>
+                                        }
+                                    }
+
+                                }
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div id="footer">
+            <div class="container">
+                <hr />
+                <div class="row">
+                    <div class="col-12">
+
+                        <!-- Contact -->
+                        <section class="contact">
+                            <header>
+                                <h3>Do you want to build a good self-defence?</h3>
+                            </header>
+                            <p>Join Our club and be a part of professional Martial Arts environment. We have world class trainers to train with passion.</p>
+                            <ul class="icons">
+                                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                <li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+                                <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+                                <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+                            </ul>
+                        </section>
+
+                        <!-- Copyright -->
+                        <div class="copyright">
+                            <ul class="menu">
+                                <li>&copy; Nuketown. All rights reserved.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/jquery.dropotron.min.js"></script>
+    <script src="~/assets/js/jquery.scrolly.min.js"></script>
+    <script src="~/assets/js/jquery.scrollex.min.js"></script>
+    <script src="~/assets/js/browser.min.js"></script>
+    <script src="~/assets/js/breakpoints.min.js"></script>
+    <script src="~/assets/js/util.js"></script>
+    <script src="~/assets/js/main.js"></script>
+
+</body>
+</html>

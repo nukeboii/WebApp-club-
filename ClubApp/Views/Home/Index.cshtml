@@ -1,0 +1,255 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE HTML>
+<!--
+    Helios by HTML5 UP
+    html5up.net |
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Martial Arts Club</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="~/assets/css/noscript.css" /></noscript>
+</head>
+<body class="homepage is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <div id="header">
+
+            <!-- Inner -->
+            <div class="inner">
+                <header>
+                    <h1><a asp-controller="Home" asp-action="Index" id="logo">CHOOSE YOUR FIGHT AND JOIN IN CLUB</a></h1>
+                    <hr />
+                    <p>You can join the action by contacting the club of your interest directly.</p>
+                </header>
+                <footer>
+                    <a href="#banner" class="button circled scrolly">JOIN</a>
+                </footer>
+            </div>
+
+            <!-- Nav -->
+            <nav id="nav">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li>
+                        <a>Member News</a>
+                        <ul>
+                            <li><a asp-controller="News" asp-action="Index">See Member News</a></li>
+                            @{
+                                string name = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(name))
+                                {
+                                    <li><a asp-controller="News" asp-action="AddNews">Add News</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a>Upcoming Competitions</a>
+                        <ul>
+                            <li><a asp-controller="Events" asp-action="Index">See Upcoming Competitions</a></li>
+                            @{
+                                string sessionName = Context.Session.GetString("user");
+                                if (!string.IsNullOrEmpty(sessionName))
+                                {
+                                    <li><a asp-controller="Events" asp-action="AddEvent">Add Upcoming Competition</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @{
+                        string user = Context.Session.GetString("user");
+                        if (string.IsNullOrEmpty(user))
+                        {
+                            <li><a asp-controller="User" asp-action="RegisterOrLogin">Register Or Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="User" asp-action="Logout">Logout</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- Banner -->
+        <section id="banner">
+            <header>
+                <h2>Daitoryu <strong>Aikijujutsu</strong>.</h2>
+                <p>
+                    Daito-ryu has an over 1000 year history. Daito-ryu aiki-jujutsu is a comprehensive martial art that aims to develop good self-defence skills and maintain the practitioner's physical and mental fitness.
+                </p>
+            </header>
+        </section>
+
+        <!-- Carousel -->
+        <section class="carousel">
+            <div class="reel">
+
+                <article>
+                    <a href="#" class="image featured"><img src="~/images/img1.jpg" alt="" /></a>
+                    <header>
+                        <h3><a href="#">Training</a></h3>
+                    </header>
+                    <p>We are here to train best so come and train with professionals and champions in all the martial arts disciplines.</p>
+                </article>
+
+                <article>
+                    <a href="#" class="image featured"><img src="~/images/img2.jpg" alt="" /></a>
+                    <header>
+                        <h3><a href="#">Competition</a></h3>
+                    </header>
+                    <p>We have all levels of competition classes and world class instruction available.</p>
+                </article>
+
+                <article>
+                    <a href="#" class="image featured"><img src="~/images/img3.jpg" alt="" /></a>
+                    <header>
+                        <h3><a href="#">Learning</a></h3>
+                    </header>
+                    <p>Our classes range from beginner to expert in both individual and coed environments.</p>
+                </article>
+
+                <article>
+                    <a href="#" class="image featured"><img src="~/images/pic1.jpg" alt="" /></a>
+                    <header>
+                        <h3><a href="#">Tradition</a></h3>
+                    </header>
+                    <p>We continues the martial arts tradition of samurai warriors, but with a gentler spirit.</p>
+                </article>
+
+                <article>
+                    <a href="#" class="image featured"><img src="~/images/pic2.jpg" alt="" /></a>
+                    <header>
+                        <h3><a href="#">Professionalism</a></h3>
+                    </header>
+                    <p>As a martial art, it is non-violent and does not involve anger. Victory is achieved through self improvement.</p>
+                </article>
+
+                <article>
+                    <a href="#" class="image featured"><img src="~/images/pic3.jpg" alt="" /></a>
+                    <header>
+                        <h3><a href="#">Practice</a></h3>
+                    </header>
+                    <p>Exercises consist of body techniques performed in pairs (throws, locks and pins) as well as weapons techniques.</p>
+                </article>
+
+                <article>
+                    <a href="#" class="image featured"><img src="~/images/pic4.jpg" alt="" /></a>
+                    <header>
+                        <h3><a href="#">Techniques</a></h3>
+                    </header>
+                    <p>The techniques aim to exploit the force of an attacker and to redirect it to resolve the conflict.</p>
+                </article>
+
+
+
+            </div>
+        </section>
+
+        <!-- Main -->
+        <div class="wrapper style2">
+
+            <article id="main" class="container special">
+                <a href="#" class="image featured"><img src="~/images/slide2.jpg" alt="" /></a>
+                <header>
+                    <h2><a href="#">Judo</a></h2>
+                    <p>
+                        Judo is a modern Budo sport that develops both mind and body. The basic techniques of judo include throws, hold downs,
+                        hand locks and choke holds. Judo develops all-around endurance, power, speed, and nimbleness as well as balance and agility. Judo is suitable for all ages, sizes and genders who seek a demanding (*) fitness sport.
+                        Judo is also a competitive sport and an Olympic sport.
+                    </p>
+                </header>
+            </article>
+
+        </div>
+
+        <!-- Features -->
+        <div class="wrapper style1">
+
+            <section id="features" class="container special">
+                <header>
+                    <h2>Karate</h2>
+                    <p>
+                        Honbu is a university student karate club based in the Helsinki region. Club practices include diverse elements of the
+                        Koryu uchinadi school of karate as well as other comprehensive martial arts and self-defence systems.
+                        Karate is suited to all who seek to improve their fitness level, body control and martial skills.
+                    </p>
+                </header>
+                <div class="row">
+                    <article class="col-4 col-12-mobile special">
+                        <a href="#" class="image featured"><img src="~/images/1.jpg" alt="" /></a>
+                    </article>
+                    <article class="col-4 col-12-mobile special">
+                        <a href="#" class="image featured"><img src="~/images/2.jpg" alt="" /></a>
+                    </article>
+                    <article class="col-4 col-12-mobile special">
+                        <a href="#" class="image featured"><img src="~/images/3.jpg" alt="" /></a>
+                    </article>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <div id="footer">
+            <div class="container">
+                <hr />
+                <div class="row">
+                    <div class="col-12">
+
+                        <!-- Contact -->
+                        <section class="contact">
+                            <header>
+                                <h3>Do you want to build a good self-defence?</h3>
+                            </header>
+                            <p>Join Our club and be a part of professional Martial Arts environment. We have world class trainers to train with passion.</p>
+                            <ul class="icons">
+                                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                <li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+                                <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+                                <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+                            </ul>
+                        </section>
+
+                        <!-- Copyright -->
+                        <div class="copyright">
+                            <ul class="menu">
+                                <li>&copy; Nuketown. All rights reserved.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/jquery.dropotron.min.js"></script>
+    <script src="~/assets/js/jquery.scrolly.min.js"></script>
+    <script src="~/assets/js/jquery.scrollex.min.js"></script>
+    <script src="~/assets/js/browser.min.js"></script>
+    <script src="~/assets/js/breakpoints.min.js"></script>
+    <script src="~/assets/js/util.js"></script>
+    <script src="~/assets/js/main.js"></script>
+
+</body>
+</html>
