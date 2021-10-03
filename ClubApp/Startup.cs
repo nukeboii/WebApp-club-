@@ -1,4 +1,5 @@
 using ClubApp.Models;
+using ClubApp.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,7 @@ namespace ClubApp
             services.AddDbContext<ClubDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
             services.AddMvc();
+            services.AddTransient<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

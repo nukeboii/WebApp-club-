@@ -1,4 +1,5 @@
 ﻿using ClubApp.Models;
+using ClubApp.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,19 +15,16 @@ namespace ClubApp.Controllers
     public class NewsController : Controller
     {
         private readonly ClubDbContext dbContext;
+        private readonly IRepository _repo;
         private readonly IWebHostEnvironment webHostEnvironment;
-        public NewsController(ClubDbContext _dbContext, IWebHostEnvironment hostEnvironment)
+        public NewsController(IRepository repo, IWebHostEnvironment hostEnvironment)
         {
-            dbContext = _dbContext;
             webHostEnvironment = hostEnvironment;
+            _repo = repo;
         }
         public IActionResult Index()
         {
-            var news = dbContext.News.Include(x=>x.Member).ToList();
-            foreach (var _news in news)
-            {
-                _news.Member = dbContext.Members.Find(_news.UserId);
-            }
+            var news = _repo.GetNews();
             if (news.Count > 0)
             {
                 Random random = new Random();
@@ -58,8 +56,7 @@ namespace ClubApp.Controllers
                 news.ImageName = uniqueFileName;
                 news.UserId = HttpContext.Session.GetInt32("userID").Value;
 
-                dbContext.News.Add(news);
-                await dbContext.SaveChangesAsync();
+                await _repo.AddNews(news);
                 return RedirectToAction(nameof(Index));
             }
             return View();
